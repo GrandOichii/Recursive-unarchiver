@@ -1,4 +1,4 @@
-rar*folder/
-test*folder/
-zip*folder/
+**/rar folder/
+**/test folder/
+**/zip folder/
 __pycache__/
