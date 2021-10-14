@@ -6,7 +6,7 @@ from os.path import exists
 
 import sys
 
-from unarchivers import isRarFile, isZipFile, unrar, unzip
+from unarchivers import is_rar_file, is_zip_file, unrar, unzip
 
 class UnarchiveWorker(QThread):
     finished = pyqtSignal()
@@ -17,7 +17,7 @@ class UnarchiveWorker(QThread):
         self.to_path = to_path
 
     def run(self):
-        if isRarFile(self.from_path):
+        if is_rar_file(self.from_path):
             try:
                 unrar(self.from_path, self.to_path)
             except Exception as e:
@@ -25,7 +25,7 @@ class UnarchiveWorker(QThread):
                 self.finished.emit()
                 return
 
-        if isZipFile(self.from_path):
+        if is_zip_file(self.from_path):
             try:
                 unzip(self.from_path, self.to_path)
             except Exception as e:
@@ -126,7 +126,7 @@ class UnarchiverWindow(QMainWindow):
             self.showMB('Folder ' + self.destination_path_line_edit.text() + " doesn't exist!", 'Error')
             return
 
-        if not isRarFile(archive_path) and not isZipFile(archive_path):
+        if not is_rar_file(archive_path) and not is_zip_file(archive_path):
             self.showMB('File ' + archive_path + ' is not an archive!', 'Error')
             return        
 
