@@ -5,7 +5,6 @@ from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow, QLabel, QPus
 from os.path import exists
 
 import sys
-import threading
 
 from unarchivers import isRarFile, isZipFile, unrar, unzip
 
@@ -36,7 +35,6 @@ class UnarchiveWorker(QThread):
         self.finished.emit()
 
 
-
 def window():
     app = QApplication([])
     win = UnarchiverWindow()
@@ -62,6 +60,8 @@ class UnarchiverWindow(QMainWindow):
         self.archive_path_line_edit = QLineEdit(self)
         self.archive_path_line_edit.setGeometry(10, 50, 400, 40)
         self.archive_path_line_edit.setFont(self.funnyFont)
+        if len(sys.argv) == 3:
+            self.archive_path_line_edit.setText(sys.argv[1])
 
         self.archive_path_button = QPushButton(self)
         self.archive_path_button.setText('...')
@@ -77,6 +77,8 @@ class UnarchiverWindow(QMainWindow):
         self.destination_path_line_edit = QLineEdit(self)
         self.destination_path_line_edit.setGeometry(10, 150, 400, 40)
         self.destination_path_line_edit.setFont(self.funnyFont)
+        if len(sys.argv) == 3:
+            self.destination_path_line_edit.setText(sys.argv[2])
 
         self.destination_path_button = QPushButton(self)
         self.destination_path_button.setText('...')
@@ -157,6 +159,4 @@ class UnarchiverWindow(QMainWindow):
         self.destination_path_line_edit.setEnabled(value)
         self.unarchive_button.setEnabled(value)
         
-        
-
 window()
